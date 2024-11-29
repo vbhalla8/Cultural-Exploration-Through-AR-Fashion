@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Cultural-Exploration-Through-AR-Fashion </title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id = "room" src="bedroom.png" >
+        <img id = "mystery" src="mystery.png" >
+      
+      </a-assets>
+      <!-- Camera -->
+      <a-camera position="2.4 -2.4 8"></a-camera>
+      <a-sky src="#room" rotation="0 -100 0"></a-sky>
+      <a-text font="kelsonsans" value="Want to know how I will look in different traditional clothes? Rotate and look for the mirror!" width="6" position="-.5 -1.5 0"></a-text>
+      <a-image src="#mystery" position="-18 1 55" scale="30 30 30" rotation="0 0 0"></a-image>
+    </a-scene>
+  </body>
+</html>
