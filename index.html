@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Cultural-Exploration-Through-AR-Fashion </title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id = "room" src="bedroom.png" >
+        <img id = "mystery" src="mystery.png" >
+      
+      </a-assets>
+      <!-- Camera -->
+      <a-camera position="-1.4 1.4 8"></a-camera>
+      <a-sky src="#room"></a-sky>
+      <a-image src="#mystery" position="40 1 5" scale="10 10 10"></a-image>
+
+    </a-scene>
+  </body>
+</html>
