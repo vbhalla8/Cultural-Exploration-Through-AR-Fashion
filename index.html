@@ -1,22 +1,164 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Cultural-Exploration-Through-AR-Fashion </title>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script>
+      AFRAME.registerComponent('screen-handler', {
+        init: function () {
+          const outfits = [
+            {
+              title: "WELCOME TO CULTURAL JOURNEY",
+              subtitle: "Click to Begin Your Fashion Adventure",
+              color: "#ff0000",
+              emissive: "red"
+            },
+            {
+              title: "TRADITIONAL JAPANESE KIMONO",
+              subtitle: "Elegant formal wear with rich history",
+              color: "#ff4444",
+              emissive: "red"
+            },
+            {
+              title: "INDIAN SAREE",
+              subtitle: "Beautiful draping with intricate patterns",
+              color: "#4444ff",
+              emissive: "blue"
+            },
+            {
+              title: "MEXICAN HUIPIL",
+              subtitle: "Vibrant embroidered blouse and dress",
+              color: "#44ff44",
+              emissive: "green"
+            },
+            {
+              title: "AFRICAN DASHIKI",
+              subtitle: "Colorful patterns with deep meaning",
+              color: "#ffff00",
+              emissive: "yellow"
+            },
+            {
+              title: "SCOTTISH KILT",
+              subtitle: "Traditional tartan patterns",
+              color: "#ff00ff",
+              emissive: "purple"
+            }
+          ];
+
+          let currentOutfit = 0;
+          const el = this.el;
+          const screenText = el.querySelector('#screenText');
+          const subtitleText = el.querySelector('#subtitleText');
+          
+          el.addEventListener('click', function () {
+            currentOutfit = (currentOutfit + 1) % outfits.length;
+            const outfit = outfits[currentOutfit];
+            
+            el.setAttribute('animation__fade', {
+              property: 'material.opacity',
+              dur: 300,
+              from: 0.5,
+              to: 1,
+              easing: 'easeInOutQuad'
+            });
+            
+            el.setAttribute('color', outfit.color);
+            el.setAttribute('material', `emissive: ${outfit.emissive}; emissiveIntensity: 0.6`);
+            
+            screenText.setAttribute('text', {
+              value: outfit.title,
+              color: 'white',
+              align: 'center',
+              width: 4,
+              wrapCount: 20
+            });
+            
+            subtitleText.setAttribute('text', {
+              value: outfit.subtitle,
+              color: 'white',
+              align: 'center',
+              width: 3,
+              wrapCount: 25
+            });
+          });
+        }
+      });
+    </script>
   </head>
   <body>
-    <a-scene>
-      <a-assets>
-        <img id = "room" src="bedroom.png" >
-        <img id = "mystery" src="mystery.png" >
+    <a-scene background="color: #000">
+      <!-- Environment -->
+      <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#111"></a-plane>
+      <a-plane position="0 8 0" rotation="90 0 0" width="20" height="20" color="#111"></a-plane>
+      <a-plane position="0 4 10" rotation="0 180 0" width="20" height="8" color="#222"></a-plane>
+      <a-plane position="-10 4 0" rotation="0 90 0" width="20" height="8" color="#222"></a-plane>
+      <a-plane position="10 4 0" rotation="0 -90 0" width="20" height="8" color="#222"></a-plane>
       
-      </a-assets>
+      <!-- Starting Wall with Message -->
+      <a-plane position="0 4 -9.5" rotation="0 0 0" width="6" height="7" color="#4B0631">
+        <a-entity
+          position="0 -1 0.1"
+          text="value: → TURN AROUND\nto discover how you'd look\nin different cultural clothing...; color: white; align: center; width: 4; wrapCount: 20; font: monospace">
+        </a-entity>
+        <a-entity
+          position="0 -2 0.1"
+          text="value: → TURN AROUND\nto discover how you'd look\nin different cultural clothing...\n \n Use mouse to look around and WASD to move; color: #aaa; align: center; width: 3; wrapCount: 25">
+        </a-entity>
+      </a-plane>
+
+      <!-- Main Interactive Screen (Behind Starting Position) - Now Vertical -->
+      <a-entity position="0 4 9.5">
+        <a-plane
+          class="clickable"
+          screen-handler
+          rotation="0 180 0"
+          width="5"
+          height="7"
+          color="#4B0631"
+          material="emissive: red; emissiveIntensity: 0.6"
+          animation="property: scale; dir: alternate; dur: 2000; easing: easeInOutSine; loop: true; to: 1.02 1.02 1.02">
+          
+          <a-entity
+            id="screenText"
+            position="0 2.5 0.1"
+            text="value: WELCOME TO CULTURAL JOURNEY; color: white; align: center; width: 4; wrapCount: 20; font: monospace">
+          </a-entity>
+          
+          <a-entity
+            id="subtitleText"
+            position="0 2 0.1"
+            text="value: Click to Begin Your Fashion Adventure; color: white; align: center; width: 3; wrapCount: 25; font: monospace">
+          </a-entity>
+
+          <!-- Decorative Border -->
+          <a-box position="-2.55 0 0" scale="0.1 7.2 0.1" color="#fff" material="emissive: white; emissiveIntensity: 0.5"></a-box>
+          <a-box position="2.55 0 0" scale="0.1 7.2 0.1" color="#fff" material="emissive: white; emissiveIntensity: 0.5"></a-box>
+          <a-box position="0 3.6 0" scale="5.2 0.1 0.1" color="#fff" material="emissive: white; emissiveIntensity: 0.5"></a-box>
+          <a-box position="0 -3.6 0" scale="5.2 0.1 0.1" color="#fff" material="emissive: white; emissiveIntensity: 0.5"></a-box>
+        </a-plane>
+      </a-entity>
+
+      <!-- Ambient Lighting Effects -->
+      <a-entity position="-2.5 3 0">
+        <a-sphere radius="0.1" color="#ff0000" material="emissive: red; emissiveIntensity: 2"
+                  animation="property: position; dir: alternate; dur: 4000; easing: easeInOutSine; loop: true; to: 2.5 3 0"></a-sphere>
+      </a-entity>
+
       <!-- Camera -->
-      <a-camera position="2.4 -2.4 8"></a-camera>
-      <a-sky src="#room" rotation="0 -100 0"></a-sky>
-      <a-text font="kelsonsans" value="Want to know how I will look in different traditional clothes? Rotate and look for the mirror!" width="6" position="-.5 -1.5 0"></a-text>
-      <a-image src="#mystery" position="-18 1 55" scale="30 30 30" rotation="0 0 0"></a-image>
+      <a-entity position="0 1.6 -6" rotation="0 0 0">
+        <a-entity camera look-controls wasd-controls="acceleration: 100">
+          <a-entity
+            cursor="fuse: false"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: white; shader: flat"
+            raycaster="objects: .clickable">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!-- Lighting -->
+      <a-light type="ambient" intensity="0.3"></a-light>
+      <a-light type="spot" position="0 5 0" intensity="1" angle="60" color="#fff"></a-light>
     </a-scene>
   </body>
 </html>
